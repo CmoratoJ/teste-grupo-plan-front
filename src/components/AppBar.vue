@@ -1,5 +1,6 @@
 <template>
-    <v-app-bar>
+    <v-app-bar flat class="border-b">
+        <v-app-bar-nav-icon @click="handleClick"></v-app-bar-nav-icon>
         <template #append>
             <v-btn @click="logout" color="red">Logout</v-btn>
         </template>
@@ -12,7 +13,10 @@ export default {
         logout() {
             localStorage.removeItem('user');
             this.$router.push('/');
+        },
+        handleClick() {
+            this.$emit('custom-click')
         }
-    }
+    },
 }
 </script>

@@ -1,32 +1,56 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Login from '@/views/Login.vue';
-import Dashboard from '@/views/Dashboard.vue';
-import Users from '@/views/Users.vue';
-import Courses from '@/views/Courses.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
-            path: '/',
-            name: 'login',
-            component: Login
+            path: '',
+            redirect: '/guest',
         },
         {
-            path: '/dashboard',
-            component: Dashboard,
-            meta: { requiresAuth: true }
+            path: '/guest',
+            component: () => import('@/views/LayoutGuest.vue'),
+            children: [
+                {
+                    path: '/guest',
+                    redirect: '/login',
+                },
+                {
+                    name: 'login',
+                    path: '/login',
+                    component: Login
+                }
+            ]
         },
         {
-            path: '/users',
-            component: Users,
-            meta: { requiresAuth: true }
-        },
-        {
-            path: '/courses',
-            component: Courses,
-            meta: { requiresAuth: true }
-        }
+            path: '/app',
+            component: () => import('@/views/LayoutAuth.vue'),
+            children: [
+                {
+                    path: '/app',
+                    redirect: '/dashboard',
+                },
+                {
+                    name: 'Dashboard',
+                    path: '/dashboard',
+                    component: () => import('@/views/Dashboard.vue'),
+                    meta: { requiresAuth: true }
+                },
+                {
+                    name: 'Users',
+                    path: '/users',
+                    component: () => import('@/views/Users.vue'),
+                    meta: { requiresAuth: true }
+                },
+                {
+                    name: 'Courses',
+                    path: '/courses',
+                    component: () => import('@/views/Courses.vue'),
+                    meta: { requiresAuth: true }
+                }
+            ]
+        },       
     ]
 });
 
@@ -35,6 +59,8 @@ router.beforeEach((to, from, next) => {
 
     if (to.matched.some(record => record.meta.requiresAuth) && !loggedIn) {
         next('/');
+    } else if (!to.matched.some(record => record.meta.requiresAuth) && loggedIn) {
+        next('/app');
     } else {
         next();
     }

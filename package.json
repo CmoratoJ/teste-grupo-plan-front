@@ -7,12 +7,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@kyvg/vue3-notification": "^3.2.1",
     "@mdi/font": "7.4.47",
     "axios": "^1.7.2",
     "roboto-fontface": "*",
     "vue": "^3.4.31",
     "vue-router": "^4.4.0",
-    "vuetify": "^3.6.11"
+    "vuetify": "^3.6.11",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",

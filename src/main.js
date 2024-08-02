@@ -12,6 +12,7 @@ import App from './App.vue'
 
 // Composables
 import { createApp } from 'vue'
+import Notifications from '@kyvg/vue3-notification'
 
 const app = createApp(App)
 

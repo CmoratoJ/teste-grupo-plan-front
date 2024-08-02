@@ -33,9 +33,6 @@ export default {
             })
             .then (response => {
                 this.subordinates = response.data.resume;
-            })
-            .catch(err => {
-                alert('Failed');
             });
         }
     },

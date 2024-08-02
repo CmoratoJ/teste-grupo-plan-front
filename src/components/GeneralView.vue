@@ -52,7 +52,10 @@ export default {
                 this.trainingProgress = response.data.resume;
             })
             .catch(err => {
-                alert('Failed');
+                if (err.response.status === 401) {
+                    localStorage.removeItem('user');
+                    this.$router.push({ name: 'login' });
+                }
             });
         }
     },
